@@ -10,7 +10,7 @@ if (isset($_GET['p'])) {
 }
 
 $bookshelf = new Bookshelf();
-$pagination = new T2SimplePagination($page, 5, count($bookshelf->booklist));
+$pagination = new T2SimplePagination($page, 5, $bookshelf->countAll());
 
 $books = $bookshelf->getAll($pagination->offset, $pagination->per_page);
 ?>
