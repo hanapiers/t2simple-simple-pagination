@@ -44,6 +44,6 @@ class Bookshelf
 
     public function countAll()
     {
-        return count($bookshelf->booklist);
+        return count($this->booklist);
     }
 }
