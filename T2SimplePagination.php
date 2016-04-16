@@ -2,6 +2,8 @@
 
 class T2SimplePagination
 {
+    public $next_page;
+    public $prev_page;
     public $total;
     public $page = 1;
     public $per_page = 10;
@@ -38,6 +40,15 @@ class T2SimplePagination
     {
         if ($this->total > $this->per_page) {
             $this->num_page = ceil($this->total / $this->per_page);
+        }
+
+        // there are pages and it's not the last one
+        if ($this->num_page && $this->num_page > $this->page) {
+            $this->next_page = $this->page + 1;
+        }
+
+        if ($this->num_page && $this->page > 1) {
+            $this->prev_page = $this->page - 1;
         }
 
         $this->offset = $this->per_page * ($this->page - 1);
