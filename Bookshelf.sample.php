@@ -41,4 +41,9 @@ class Bookshelf
     {
         return array_slice($this->booklist, $offset, $limit);
     }
+
+    public function countAll()
+    {
+        return count($this->booklist);
+    }
 }
