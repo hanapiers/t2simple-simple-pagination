@@ -3,7 +3,7 @@
 class Bookshelf
 {
     /**
-     * Sample records for the bookshelf
+     * Sample data for the bookshelf
      * DB records may be used in place of this
      */
     public $booklist = array(
@@ -42,7 +42,7 @@ class Bookshelf
         return array_slice($this->booklist, $offset, $limit);
     }
 
-    public function countAll()
+    public function countItems()
     {
         return count($this->booklist);
     }

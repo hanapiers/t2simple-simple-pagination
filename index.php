@@ -1,20 +1,15 @@
 <?php
-
 require 'T2SimplePagination.php';
 require 'Bookshelf.sample.php';
 
 // Get page if it is set
-$page = 1;
-if (isset($_GET['p'])) {
-    $page = $_GET['p'];
-}
+$page = isset($_GET['p']) ? $_GET['p'] : 1;
 
 $bookshelf = new Bookshelf();
-$pagination = new T2SimplePagination($page, 5, $bookshelf->countAll());
+$pagination = new T2SimplePagination($page, 5, $bookshelf->countItems());
 
 $books = $bookshelf->getAll($pagination->offset, $pagination->per_page);
 ?>
-
 
 <html>
 <head>
@@ -32,9 +27,27 @@ $books = $bookshelf->getAll($pagination->offset, $pagination->per_page);
 
 <?php if ($pagination->num_page): ?>
 <ul class='pagination'>
+
+    <?php if ($pagination->prev_page): ?>
+        <li><a href='?p=<?php echo $pagination->prev_page ?>' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>
+    <?php else: ?>
+        <li class="disabled"><span aria-hidden='true'>&laquo;</span></li>
+    <?php endif; ?>
+
     <?php for ($i = 1; $i <= $pagination->num_page; $i++): ?>
-    <li><a href='?p=<?php echo $i ?>'><?php echo $i ?></a></li>
+        <?php if ($pagination->page == $i): ?>
+            <li class="active"><a href='?p=<?php echo $i ?>'><?php echo $i ?></a></li>
+        <?php else: ?>
+            <li><a href='?p=<?php echo $i ?>'><?php echo $i ?></a></li>
+        <?php endif; ?>
     <?php endfor; ?>
+
+    <?php if ($pagination->next_page): ?>
+        <li><a href='?p=<?php echo $pagination->next_page ?>' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>
+    <?php else: ?>
+        <li class="disabled"><span aria-hidden='true'>&raquo;</span></li>
+    <?php endif; ?>
+
 </ul>
 <?php endif; ?>
 

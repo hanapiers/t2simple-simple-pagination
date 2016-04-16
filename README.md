@@ -4,44 +4,64 @@ T2Simple-Pagination
 PHP Simple Pagination with Bootstrap 3
 
 ## Installation
-
 ```php
 require 'T2SimplePagination.php';
 ```
 
 ## Usage
+Initialize `T2SimplePagination` providing the 3 required parameters: `page`, `per_page` and `total`.
 
 ```php
-$page = 1;		// current page
-$per_page = 5;	// number of items to display per page
-$total = 100;	// total number of records
-
 $pagination = new T2SimplePagination($page, $per_page, $total);
-
-$query = "SELECT * FROM my_table LIMIT {$pagination->offset}, {$pagination->per_page}";
 ```
 
-## Bootstrap Usage
+Then extract the records by using the `offset` and `per_page` properties:
+```php
+$query = "SELECT * FROM my_table LIMIT {$pagination->offset}, {$pagination->per_page}"
+```
 
+#### Page Links
 ```php
 <?php if ($pagination->num_page): ?>
-<ul class='pagination'>
     <?php for ($i = 1; $i <= $pagination->num_page; $i++): ?>
-    <li><a href='?p=<?php echo $i ?>'><?php echo $i ?></a></li>
+    <a href="?p=<?php echo $i ?>">
+        <?php echo $i ?>
+    </a>
     <?php endfor; ?>
-</ul>
 <?php endif; ?>
 ```
 
+#### Pager (Next and Prev Links)
+```php
+<?php if ($pagination->prev_page): ?>
+    <a href="?p=<?php echo $pagination->prev_page ?>">Prev</a>
+<?php else: ?>
+    Prev
+<?php endif; ?>
+
+<?php if ($pagination->next_page): ?>
+    <a href="?p=<?php echo $pagination->next_page ?>">Next</a>
+<?php else: ?>
+    Next
+<?php endif; ?>
+```
+You may want to hide the pagination links when there is only one page, so it is recommended to enclose the above codes inside this if block:
+```php
+<?php if ($pagination->num_page): ?>
+    // pager or page links
+<?php endif; ?>
+```
+
+For Bootstrap 3 example, please check the `index.php` file included in this repository.
+
 ## Properties
 
-`total` - the total number of records in the pagination
-
-`page` - the current page, if not set the default value is 1
-
-`per_page` - the number of items per page, if not set the default value is 10
-
-`num_page` - the number of pages to display, if not set the default value is 0
-
-`offset` - the index to be used when selecting specific range from the records
-
+Variables | Description
+----------|---------------------------------------------------------------------
+total     | the total number of records to be paginated
+page      | the current page, default value is 1
+per_page  | number of items per page, default value is 10
+num_page  | used to display pager and page links
+offset    | used for selecting the records to display in a page
+next_page | the next page if `num_page` is not the last page
+prev_page | the previous page if `page` is not the first page
