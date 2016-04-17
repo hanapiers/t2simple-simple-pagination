@@ -22,13 +22,11 @@ $query = "SELECT * FROM my_table LIMIT {$pagination->offset}, {$pagination->per_
 
 #### Page Links
 ```php
-<?php if ($pagination->num_page): ?>
-    <?php for ($i = 1; $i <= $pagination->num_page; $i++): ?>
-    <a href="?p=<?php echo $i ?>">
-        <?php echo $i ?>
-    </a>
-    <?php endfor; ?>
-<?php endif; ?>
+<?php for ($i = 1; $i <= $pagination->num_page; $i++): ?>
+<a href="?p=<?php echo $i ?>">
+    <?php echo $i ?>
+</a>
+<?php endfor; ?>
 ```
 
 #### Pager (Next and Prev Links)
